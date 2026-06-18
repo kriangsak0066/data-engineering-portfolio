@@ -1,0 +1,31 @@
+# Data files
+data/raw/
+data/processed/
+*.csv
+*.tsv
+*.parquet
+*.xlsx
+
+# Secrets and local config
+.env
+*.env
+secrets/
+*.key
+*.pem
+kaggle.json
+
+# Power BI temporary/cache files
+*.pbitmp
+*.tmp
+
+# Python
+__pycache__/
+.venv/
+venv/
+*.pyc
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+
