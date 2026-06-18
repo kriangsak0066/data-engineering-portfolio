@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Conda / environment
+.env
+.conda/
+
+# VS Code local settings
+.vscode/
+
+# Data files
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/rejected/*
+!data/rejected/.gitkeep
+
+# Generated reports and logs
+reports/*
+!reports/.gitkeep
+logs/*
+!logs/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
