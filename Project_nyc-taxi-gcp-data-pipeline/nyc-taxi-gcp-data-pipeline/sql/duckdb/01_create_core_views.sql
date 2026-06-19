@@ -13,6 +13,15 @@ SELECT
     CAST(tpep_pickup_datetime AS DATE) AS pickup_date,
     date_trunc('month', CAST(tpep_pickup_datetime AS DATE)) AS pickup_month,
     dayofweek(tpep_pickup_datetime) AS pickup_day_of_week,
+    CASE dayofweek(tpep_pickup_datetime)
+        WHEN 0 THEN 'Sunday'
+        WHEN 1 THEN 'Monday'
+        WHEN 2 THEN 'Tuesday'
+        WHEN 3 THEN 'Wednesday'
+        WHEN 4 THEN 'Thursday'
+        WHEN 5 THEN 'Friday'
+        WHEN 6 THEN 'Saturday'
+    END AS pickup_day_name,
     EXTRACT(hour FROM tpep_pickup_datetime)::INTEGER AS pickup_hour,
     passenger_count,
     trip_distance,
@@ -56,4 +65,3 @@ FROM read_parquet(
     'data/processed/year=*/month=*/*_valid.parquet',
     hive_partitioning = TRUE
 );
-

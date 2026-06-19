@@ -43,7 +43,8 @@ FROM vw_trip_enriched;
 CREATE OR REPLACE VIEW mart_hourly_demand AS
 SELECT
     pickup_month,
-    pickup_day_of_week,
+    pickup_day_of_week AS pickup_day_sort,
+    pickup_day_name,
     pickup_hour,
     COUNT(*) AS trips,
     SUM(total_amount) AS gross_revenue,
@@ -53,6 +54,7 @@ FROM vw_trip_enriched
 GROUP BY
     pickup_month,
     pickup_day_of_week,
+    pickup_day_name,
     pickup_hour;
 
 CREATE OR REPLACE VIEW mart_payment_mix AS
