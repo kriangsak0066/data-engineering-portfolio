@@ -81,10 +81,18 @@ logs/pipeline.log
 ## Step 5: รัน tests
 
 ```powershell
-pytest -q
+python -m pytest -q
 ```
 
 Tests ช่วยยืนยันว่า pipeline ยังแยก valid/rejected rows ได้ถูกต้องหลังแก้ code
+
+ถ้าเจอ error ว่า `pytest` is not recognized ให้ใช้ Python จาก virtual environment โดยตรง:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q
+```
+
+สาเหตุคือ command `pytest` ยังไม่อยู่ใน PATH แต่ package อาจติดตั้งใน `.venv` แล้ว การเรียกผ่าน `python -m pytest` จะชัดเจนกว่าในงานจริง
 
 ## Step 6: เตรียม GCP
 
@@ -168,4 +176,3 @@ git add README.md docs sql src tests requirements.txt .env.example .gitignore
 git commit -m "Build NYC taxi GCP pipeline portfolio project"
 git push
 ```
-

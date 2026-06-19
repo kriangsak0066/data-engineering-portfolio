@@ -118,7 +118,13 @@ logs/pipeline.log
 ### 5. Run tests
 
 ```powershell
-pytest -q
+python -m pytest -q
+```
+
+If `pytest` is not recognized, use the virtual environment Python directly:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q
 ```
 
 ## Data Quality Rules
@@ -194,4 +200,3 @@ Do not commit:
 - `.env`
 - credentials
 - logs and generated reports
-
