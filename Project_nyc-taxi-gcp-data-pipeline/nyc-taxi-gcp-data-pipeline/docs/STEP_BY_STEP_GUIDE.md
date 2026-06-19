@@ -33,6 +33,22 @@ data/raw/yellow_tripdata_2026-03.parquet
 .\.venv\Scripts\Activate.ps1
 ```
 
+ถ้า PowerShell ขึ้น error ว่า `running scripts is disabled on this system` ไม่ต้องตกใจ นี่คือ Execution Policy ของ Windows ไม่ใช่ virtual environment พัง วิธีง่ายสุดคือไม่ต้อง activate แล้วเรียก Python ใน `.venv` โดยตรง:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m src.inspect_data
+.\.venv\Scripts\python.exe -m src.main
+.\.venv\Scripts\python.exe -m pytest -q
+```
+
+ถ้าต้องการ activate จริง ๆ ให้ bypass เฉพาะ PowerShell window ปัจจุบัน:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+```
+
 ถ้าต้องสร้างใหม่:
 
 ```powershell

@@ -99,6 +99,22 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+If PowerShell blocks `Activate.ps1` with `running scripts is disabled on this system`, you can skip activation and run the virtual environment Python directly:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m src.inspect_data
+.\.venv\Scripts\python.exe -m src.main
+.\.venv\Scripts\python.exe -m pytest -q
+```
+
+Alternative temporary fix for the current PowerShell window only:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+```
+
 ### 3. Inspect source files
 
 ```powershell
