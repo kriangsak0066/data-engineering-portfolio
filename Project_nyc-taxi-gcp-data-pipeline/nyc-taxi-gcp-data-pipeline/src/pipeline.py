@@ -175,7 +175,9 @@ def process_file(
         escaped_valid = str(valid_output).replace("'", "''")
         escaped_rejected = str(rejected_output).replace("'", "''")
 
-        derived_select = """
+        source_file_name = taxi_file.path.name.replace("'", "''")
+
+        derived_select = f"""
             *,
             CAST(tpep_pickup_datetime AS DATE) AS pickup_date,
             EXTRACT(year FROM tpep_pickup_datetime)::INTEGER AS pickup_year,
@@ -194,7 +196,7 @@ def process_file(
                 THEN ROUND(total_amount / trip_distance, 2)
                 ELSE NULL
             END AS amount_per_mile,
-            '{taxi_file.path.name}' AS source_file,
+            '{source_file_name}' AS source_file,
             CURRENT_TIMESTAMP AS processed_at
         """
 

@@ -57,3 +57,8 @@ def test_process_file_splits_valid_and_rejected_rows(tmp_path: Path) -> None:
     assert result.valid_output.exists()
     assert result.rejected_output.exists()
     assert result.report_output.exists()
+
+    valid_frame = pd.read_parquet(result.valid_output)
+    rejected_frame = pd.read_parquet(result.rejected_output)
+    assert valid_frame["source_file"].iloc[0] == source_path.name
+    assert rejected_frame["source_file"].iloc[0] == source_path.name

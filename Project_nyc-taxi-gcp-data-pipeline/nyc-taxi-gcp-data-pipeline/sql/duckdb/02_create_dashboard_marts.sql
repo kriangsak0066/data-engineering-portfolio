@@ -24,6 +24,22 @@ GROUP BY
     pickup_date,
     pickup_month;
 
+CREATE OR REPLACE VIEW mart_overall_kpis AS
+SELECT
+    COUNT(*) AS trips,
+    SUM(total_amount) AS gross_revenue,
+    SUM(fare_amount) AS fare_revenue,
+    SUM(tip_amount) AS tip_amount,
+    SUM(tolls_amount) AS tolls_amount,
+    SUM(COALESCE(congestion_surcharge, 0)) AS congestion_surcharge,
+    SUM(COALESCE(airport_fee, 0)) AS airport_fee,
+    SUM(total_amount) / NULLIF(COUNT(*), 0) AS average_total_amount,
+    AVG(trip_distance) AS average_trip_distance,
+    AVG(trip_duration_minutes) AS average_duration_minutes,
+    SUM(tip_amount) / NULLIF(SUM(fare_amount), 0) AS tip_rate,
+    COUNT(*) FILTER (WHERE is_airport_trip) * 1.0 / NULLIF(COUNT(*), 0) AS airport_trip_rate
+FROM vw_trip_enriched;
+
 CREATE OR REPLACE VIEW mart_hourly_demand AS
 SELECT
     pickup_month,
@@ -92,4 +108,3 @@ WHERE trip_distance = 0
    OR trip_duration_minutes >= 180
    OR speed_mph >= 80
    OR total_amount = 0;
-

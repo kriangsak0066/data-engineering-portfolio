@@ -152,6 +152,7 @@ Expected outputs:
 
 ```text
 exports/mart_daily_kpis.csv
+exports/mart_overall_kpis.csv
 exports/mart_hourly_demand.csv
 exports/mart_payment_mix.csv
 exports/mart_zone_pair_performance.csv

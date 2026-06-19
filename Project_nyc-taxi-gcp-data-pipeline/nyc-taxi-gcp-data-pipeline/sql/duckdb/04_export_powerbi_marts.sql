@@ -8,6 +8,10 @@ COPY mart_daily_kpis
 TO 'exports/mart_daily_kpis.csv'
 (HEADER, DELIMITER ',');
 
+COPY mart_overall_kpis
+TO 'exports/mart_overall_kpis.csv'
+(HEADER, DELIMITER ',');
+
 COPY mart_hourly_demand
 TO 'exports/mart_hourly_demand.csv'
 (HEADER, DELIMITER ',');
@@ -23,4 +27,3 @@ TO 'exports/mart_zone_pair_performance.csv'
 COPY mart_data_quality_summary
 TO 'exports/mart_data_quality_summary.csv'
 (HEADER, DELIMITER ',');
-
