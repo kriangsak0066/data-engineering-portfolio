@@ -15,6 +15,8 @@ class Settings:
     rejected_dir: Path
     report_dir: Path
     log_dir: Path
+    export_dir: Path
+    duckdb_database: Path
     max_trip_hours: int
 
 
@@ -34,6 +36,8 @@ def load_settings() -> Settings:
         rejected_dir=resolve_path("REJECTED_DIR", "data/rejected"),
         report_dir=resolve_path("REPORT_DIR", "reports"),
         log_dir=resolve_path("LOG_DIR", "logs"),
+        export_dir=resolve_path("EXPORT_DIR", "exports"),
+        duckdb_database=resolve_path("DUCKDB_DATABASE", "nyc_taxi.duckdb"),
         max_trip_hours=int(os.getenv("MAX_TRIP_HOURS", "24")),
     )
 
@@ -43,6 +47,7 @@ def load_settings() -> Settings:
         settings.rejected_dir,
         settings.report_dir,
         settings.log_dir,
+        settings.export_dir,
     ):
         path.mkdir(parents=True, exist_ok=True)
 

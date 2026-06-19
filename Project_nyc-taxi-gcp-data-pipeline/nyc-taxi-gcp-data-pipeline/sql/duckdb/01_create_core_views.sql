@@ -1,21 +1,19 @@
 /*
-BigQuery core views for NYC Yellow Taxi analytics.
+DuckDB core views for NYC Yellow Taxi local analytics.
 
-Before running:
-1. Load processed Parquet into nyc_taxi_staging.stg_yellow_trips.
-2. Select the correct GCP project in BigQuery console.
-3. Run this script.
+Run from the project root after src.main creates data/processed files.
+The view reads all valid processed Parquet files with Hive-style partitions.
 */
 
-CREATE OR REPLACE VIEW `nyc_taxi_mart.vw_trip_enriched` AS
+CREATE OR REPLACE VIEW vw_trip_enriched AS
 SELECT
     VendorID AS vendor_id,
     tpep_pickup_datetime,
     tpep_dropoff_datetime,
-    DATE(tpep_pickup_datetime) AS pickup_date,
-    DATE_TRUNC(DATE(tpep_pickup_datetime), MONTH) AS pickup_month,
-    EXTRACT(DAYOFWEEK FROM tpep_pickup_datetime) AS pickup_day_of_week,
-    EXTRACT(HOUR FROM tpep_pickup_datetime) AS pickup_hour,
+    CAST(tpep_pickup_datetime AS DATE) AS pickup_date,
+    date_trunc('month', CAST(tpep_pickup_datetime AS DATE)) AS pickup_month,
+    dayofweek(tpep_pickup_datetime) AS pickup_day_of_week,
+    EXTRACT(hour FROM tpep_pickup_datetime)::INTEGER AS pickup_hour,
     passenger_count,
     trip_distance,
     RatecodeID AS rate_code_id,
@@ -41,7 +39,7 @@ SELECT
     total_amount,
     congestion_surcharge,
     Airport_fee AS airport_fee,
-    SAFE_CAST(cbd_congestion_fee AS NUMERIC) AS cbd_congestion_fee,
+    cbd_congestion_fee,
     trip_duration_minutes,
     amount_per_mile,
     CASE
@@ -51,6 +49,11 @@ SELECT
     END AS speed_mph,
     CASE WHEN Airport_fee > 0 THEN TRUE ELSE FALSE END AS is_airport_trip,
     source_file,
-    processed_at
-FROM `nyc_taxi_staging.stg_yellow_trips`;
+    processed_at,
+    year AS source_year,
+    month AS source_month
+FROM read_parquet(
+    'data/processed/year=*/month=*/*_valid.parquet',
+    hive_partitioning = TRUE
+);
 

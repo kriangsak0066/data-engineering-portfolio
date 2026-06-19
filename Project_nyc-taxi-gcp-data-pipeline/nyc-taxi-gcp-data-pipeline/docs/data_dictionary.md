@@ -38,7 +38,7 @@ processing each monthly file.
 - `tip_amount` generally captures credit-card tips; cash tips may not be included.
 - `trip_distance` is meter-reported and can contain outliers.
 - `PULocationID` and `DOLocationID` need a taxi zone lookup table if you want borough/zone names in the dashboard.
-- `payment_type` should be mapped to readable labels in SQL marts before using it in Looker Studio.
+- `payment_type` should be mapped to readable labels in SQL marts before using it in Power BI Desktop.
 
 ## Professional Use
 

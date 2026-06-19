@@ -1,18 +1,17 @@
-# NYC Taxi GCP Data Pipeline
+# NYC Taxi Local Analytics Pipeline
 
-Portfolio project สำหรับสร้าง data pipeline จาก NYC Yellow Taxi monthly Parquet files ไปสู่ Google Cloud Storage, BigQuery analytics marts และ Looker Studio dashboard
+Portfolio project สำหรับสร้าง data pipeline แบบไม่ใช้ Cloud จาก NYC Yellow Taxi monthly Parquet files ไปสู่ local validated data lake, DuckDB SQL marts และ Power BI Desktop dashboard
 
-## Project Goal
+## Why No Cloud
 
-โปรเจกต์นี้ออกแบบเพื่อโชว์ทักษะ Data Engineering for Analyst:
+โปรเจกต์นี้ตั้งใจทำแบบ local-first เพราะไม่ต้องใช้บัตรเครดิตหรือ cloud billing แต่ยังโชว์ทักษะ Data Engineering ที่สำคัญได้ครบ:
 
-- อ่านและตรวจคุณภาพไฟล์ Parquet ขนาดใหญ่ด้วย DuckDB
-- แยกข้อมูลเป็น raw, processed และ rejected zones
-- ออกแบบ cloud data lake บน Google Cloud Storage
-- โหลดข้อมูลเข้า BigQuery staging table
-- สร้าง analytics marts สำหรับ dashboard
-- ออกแบบ Looker Studio dashboard แบบ professional
-- เก็บ code, SQL, docs และ test ไว้ใน GitHub portfolio
+- ingest และ validate Parquet files ขนาดหลายล้านแถว
+- แยก raw, processed และ rejected zones
+- ทำ data quality checks พร้อม rejected reason
+- สร้าง SQL marts ด้วย DuckDB
+- ออกแบบ dashboard สำหรับ analyst ด้วย Power BI Desktop
+- เขียน docs, tests และ Git workflow แบบ portfolio-ready
 
 ## Current Dataset
 
@@ -40,14 +39,14 @@ Source grain:
 
 ```mermaid
 flowchart LR
-    A["NYC Yellow Taxi Parquet files"] --> B["Local raw zone"]
+    A["NYC Yellow Taxi raw Parquet"] --> B["Local raw zone"]
     B --> C["DuckDB validation pipeline"]
     C --> D["Processed valid Parquet"]
     C --> E["Rejected Parquet + quality reports"]
-    D --> F["Google Cloud Storage processed zone"]
-    F --> G["BigQuery staging table"]
-    G --> H["BigQuery mart views"]
-    H --> I["Looker Studio dashboard"]
+    D --> F["DuckDB SQL marts"]
+    F --> G["Exported CSV/Parquet marts optional"]
+    F --> H["Power BI Desktop dashboard"]
+    E --> I["Data quality dashboard page"]
 ```
 
 ## Project Structure
@@ -61,14 +60,14 @@ nyc-taxi-gcp-data-pipeline/
 ├── docs/
 │   ├── DASHBOARD_DESIGN.md
 │   ├── DATA_MODEL.md
-│   ├── GCP_BIGQUERY_SETUP.md
+│   ├── LOCAL_ANALYTICS_SETUP.md
 │   ├── PROJECT_ROADMAP.md
 │   ├── STEP_BY_STEP_GUIDE.md
 │   └── data_dictionary.md
 ├── logs/
 ├── reports/
 ├── sql/
-│   └── bigquery/
+│   └── duckdb/
 ├── src/
 ├── tests/
 ├── .env.example
@@ -85,7 +84,13 @@ nyc-taxi-gcp-data-pipeline/
 cd C:\data-engineering-portfolio\Project_nyc-taxi-gcp-data-pipeline\nyc-taxi-gcp-data-pipeline
 ```
 
-### 2. Create environment
+### 2. Use the virtual environment
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+If you need to recreate it:
 
 ```powershell
 python -m venv .venv
@@ -97,13 +102,13 @@ pip install -r requirements.txt
 ### 3. Inspect source files
 
 ```powershell
-python -m src.inspect_data
+.\.venv\Scripts\python.exe -m src.inspect_data
 ```
 
 ### 4. Run local validation pipeline
 
 ```powershell
-python -m src.main
+.\.venv\Scripts\python.exe -m src.main
 ```
 
 Expected outputs:
@@ -118,13 +123,23 @@ logs/pipeline.log
 ### 5. Run tests
 
 ```powershell
-python -m pytest -q
+.\.venv\Scripts\python.exe -m pytest -q
 ```
 
-If `pytest` is not recognized, use the virtual environment Python directly:
+### 6. Export dashboard marts for Power BI
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest -q
+.\.venv\Scripts\python.exe -m src.export_marts
+```
+
+Expected outputs:
+
+```text
+exports/mart_daily_kpis.csv
+exports/mart_hourly_demand.csv
+exports/mart_payment_mix.csv
+exports/mart_zone_pair_performance.csv
+exports/mart_data_quality_summary.csv
 ```
 
 ## Data Quality Rules
@@ -141,29 +156,31 @@ A valid trip must satisfy:
 
 Invalid rows are preserved in `data/rejected` with a `rejection_reason`.
 
-## BigQuery Marts
+## Local SQL Marts
 
 SQL files:
 
 ```text
-sql/bigquery/01_create_core_views.sql
-sql/bigquery/02_create_dashboard_marts.sql
-sql/bigquery/03_data_quality_checks.sql
+sql/duckdb/01_create_core_views.sql
+sql/duckdb/02_create_dashboard_marts.sql
+sql/duckdb/03_data_quality_checks.sql
 ```
 
 Recommended marts:
 
-- `nyc_taxi_mart.vw_trip_enriched`
-- `nyc_taxi_mart.mart_daily_kpis`
-- `nyc_taxi_mart.mart_hourly_demand`
-- `nyc_taxi_mart.mart_payment_mix`
-- `nyc_taxi_mart.mart_zone_pair_performance`
-- `nyc_taxi_mart.mart_trip_outliers`
-- `nyc_taxi_mart.mart_data_quality_summary`
+- `vw_trip_enriched`
+- `mart_daily_kpis`
+- `mart_hourly_demand`
+- `mart_payment_mix`
+- `mart_zone_pair_performance`
+- `mart_trip_outliers`
+- `mart_data_quality_summary`
 
-## Dashboard Pages
+## Dashboard Tool
 
-Looker Studio dashboard design:
+Recommended tool: **Power BI Desktop**
+
+Use Power BI Desktop to connect to exported mart CSV/Parquet files or to the processed Parquet folder. The dashboard should include:
 
 - Executive Overview
 - Demand Patterns
@@ -179,7 +196,7 @@ Looker Studio dashboard design:
 
 1. `docs/STEP_BY_STEP_GUIDE.md`
 2. `docs/DATA_MODEL.md`
-3. `docs/GCP_BIGQUERY_SETUP.md`
+3. `docs/LOCAL_ANALYTICS_SETUP.md`
 4. `docs/DASHBOARD_DESIGN.md`
 5. `docs/PROJECT_ROADMAP.md`
 
@@ -200,3 +217,4 @@ Do not commit:
 - `.env`
 - credentials
 - logs and generated reports
+- exported marts and local `.duckdb` database files

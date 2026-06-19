@@ -13,29 +13,31 @@ Deliverables:
 - `reports/*_quality.csv`
 - automated tests
 
-## Milestone 2: GCS Data Lake
+## Milestone 2: Local Data Lake and Quality Evidence
 
-Goal: ย้าย raw/processed/rejected/report ไปอยู่บน Google Cloud Storage
-
-Deliverables:
-
-- bucket folder design
-- upload commands
-- `.env` cloud config
-- screenshot หรือ command log สำหรับ GitHub
-
-## Milestone 3: BigQuery Warehouse
-
-Goal: โหลด processed Parquet เข้า BigQuery และสร้าง analytics marts
+Goal: ทำให้ processed/rejected/report zones พร้อมใช้เป็นหลักฐานใน portfolio
 
 Deliverables:
 
-- `nyc_taxi_staging.stg_yellow_trips`
-- `nyc_taxi_mart.vw_trip_enriched`
-- dashboard mart views
-- data quality SQL checks
+- partitioned processed Parquet by year/month
+- rejected Parquet with `rejection_reason`
+- quality reports per source month
+- summary numbers in README or dashboard
 
-## Milestone 4: Looker Studio Dashboard
+## Milestone 3: DuckDB SQL Marts
+
+Goal: สร้าง analyst-ready SQL marts โดยไม่ใช้ Cloud
+
+Deliverables:
+
+- `vw_trip_enriched`
+- `mart_daily_kpis`
+- `mart_hourly_demand`
+- `mart_payment_mix`
+- `mart_zone_pair_performance`
+- `mart_data_quality_summary`
+
+## Milestone 4: Power BI Desktop Dashboard
 
 Goal: สร้าง dashboard สำหรับ analyst และ business stakeholder
 
@@ -46,7 +48,7 @@ Deliverables:
 - Revenue and fare
 - Operations quality
 - Data quality
-- screenshot ใน `reports` หรือ `docs/images`
+- dashboard screenshots in docs or reports
 
 ## Milestone 5: GitHub Portfolio Polish
 
@@ -57,7 +59,10 @@ Deliverables:
 - README พร้อม architecture
 - data model docs
 - dashboard design docs
-- SQL files
+- DuckDB SQL files
 - test result note
 - limitations and next steps
 
+## Optional Later Track
+
+ถ้าต้องการขยายโปรเจกต์ในอนาคตโดยไม่ใช้ Cloud สามารถเพิ่ม SQL Server Developer Edition, taxi zone lookup table หรือ Power BI dashboard screenshots ได้

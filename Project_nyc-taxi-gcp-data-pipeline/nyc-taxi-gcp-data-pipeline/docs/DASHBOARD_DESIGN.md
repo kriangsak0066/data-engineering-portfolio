@@ -1,6 +1,6 @@
 # Dashboard Design
 
-Dashboard นี้ควรออกแบบให้เหมือน analyst ใช้งานจริง ไม่ใช่แค่รวมกราฟหลายอันไว้ในหน้าเดียว เป้าหมายคือให้ stakeholder เห็น demand, revenue, operations และ data trust ได้เร็ว
+Dashboard นี้ออกแบบสำหรับ Power BI Desktop แบบ local-first ไม่ต้อง publish ไป Cloud และไม่ต้องใช้บัตรเครดิต เป้าหมายคือให้ stakeholder เห็น demand, revenue, operations และ data trust ได้เร็ว
 
 ## Target Users
 
@@ -8,6 +8,21 @@ Dashboard นี้ควรออกแบบให้เหมือน analys
 - Finance/business analyst: ดู revenue, fare, tip, surcharge
 - Data engineer: ดู data quality และ pipeline health
 - Portfolio reviewer: เห็นว่าเราเข้าใจทั้ง engineering และ analytics
+
+## Recommended Data Sources
+
+แนะนำให้ใช้ mart outputs จาก DuckDB:
+
+```text
+mart_daily_kpis
+mart_hourly_demand
+mart_payment_mix
+mart_zone_pair_performance
+mart_trip_outliers
+mart_data_quality_summary
+```
+
+ถ้ายังไม่ export marts ให้ Power BI อ่าน `data/processed` ได้โดยตรง แต่ในงาน portfolio แบบมืออาชีพควรใช้ marts เพราะ metric logic จะอยู่ใน SQL ไม่กระจายอยู่ใน dashboard
 
 ## Page 1: Executive Overview
 
@@ -23,9 +38,9 @@ Recommended visuals:
 
 Professional notes:
 
-- ใส่ date range control
-- KPI ควรมี comparison กับ previous period ถ้ามีข้อมูลหลายไตรมาส
-- ใช้ metric definitions จาก `DATA_MODEL.md`
+- ใส่ date range slicer
+- KPI ควรมี clear metric definition
+- ใช้สีเรียบ อ่านง่าย และไม่ใส่ chart เกินจำเป็น
 
 ## Page 2: Demand Patterns
 
@@ -73,13 +88,13 @@ Recommended visuals:
 - Average speed proxy: distance / duration
 - Long-duration trips
 - Zero-distance or zero-amount trips
-- Data rejection trend
+- Data outlier table
 
 Questions:
 
 - มีช่วงเวลาที่ duration ผิดปกติไหม
 - ข้อมูล outlier กระทบ KPI หรือไม่
-- Rejected rows เกิดจาก rule ไหนมากที่สุด
+- ควร exclude outlier บางประเภทจาก business KPI หรือไม่
 
 ## Page 5: Data Quality
 
@@ -90,30 +105,22 @@ Recommended visuals:
 - Total rows, valid rows, rejected rows
 - Rejection rate by source month
 - Rejection reason breakdown
-- Missing/invalid location rows
+- Invalid datetime and negative amount counts
 - Outside-source-month rows
 
 Professional notes:
 
 - Page นี้ทำให้ portfolio ดูเป็น Data Engineering จริง
 - ใช้สีเตือนเฉพาะ quality issue สำคัญ
-- แยก data quality dashboard ออกจาก business dashboard ได้ถ้าต้องการ
+- แสดง rejected rows เป็น evidence ว่า pipeline ไม่ได้ clean แบบปิดตา
 
-## Looker Studio Design Tips
+## Power BI Design Tips
 
-- ใช้ filter controls: date range, payment type, pickup hour
-- ใช้ scorecards สำหรับ KPI สำคัญ
-- ใช้ time series สำหรับ trend
-- ใช้ table พร้อม conditional formatting สำหรับ zone ranking
-- ใช้ consistent metric names จาก mart views
-- อย่าให้ dashboard คำนวณ logic ซับซ้อนเอง ให้ SQL mart เตรียมไว้ก่อน
-
-## Power BI Alternative
-
-ถ้าจะทำด้วย Power BI:
-
-- Import จาก BigQuery connector หรือ CSV extract
-- สร้าง measures ด้วย DAX เฉพาะ metric ที่ต้อง interactive
-- ใช้ star schema ถ้าเพิ่ม taxi zone dimension
-- Publish screenshot ลง GitHub ถ้ายังไม่ publish report public
+- ใช้ slicers: date range, payment type, pickup hour
+- ใช้ cards สำหรับ KPI สำคัญ
+- ใช้ line chart สำหรับ trend
+- ใช้ matrix/table สำหรับ zone ranking
+- ใช้ consistent metric names จาก mart SQL
+- อย่าให้ Power BI คำนวณ logic ซับซ้อนเองถ้า DuckDB SQL ทำให้ได้ก่อน
+- เก็บ screenshot dashboard ไว้ใน GitHub แต่ไม่ commit `.pbix` ถ้าไฟล์ใหญ่เกินไป
 

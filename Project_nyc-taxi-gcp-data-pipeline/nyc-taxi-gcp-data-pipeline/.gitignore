@@ -25,6 +25,10 @@ reports/*
 !reports/.gitkeep
 logs/*
 !logs/.gitkeep
+exports/*
+!exports/.gitkeep
+*.duckdb
+*.duckdb.wal
 
 # OS
 .DS_Store
