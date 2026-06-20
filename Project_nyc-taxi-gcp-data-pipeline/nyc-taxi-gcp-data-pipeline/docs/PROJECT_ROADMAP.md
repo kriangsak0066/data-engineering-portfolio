@@ -46,7 +46,7 @@ Deliverables:
 - Executive overview
 - Demand patterns
 - Revenue and fare
-- Operations quality
+- Zone / route performance
 - Data quality
 - dashboard screenshots in docs or reports
 

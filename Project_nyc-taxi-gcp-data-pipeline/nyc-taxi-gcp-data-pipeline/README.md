@@ -202,10 +202,22 @@ Use Power BI Desktop to connect to exported mart CSV/Parquet files or to the pro
 - Executive Overview
 - Demand Patterns
 - Revenue and Fare
-- Operations Quality
+- Zone / Route Performance
 - Data Quality
 
 ดูรายละเอียดใน `docs/DASHBOARD_DESIGN.md`
+
+## Dashboard Preview
+
+The final Power BI dashboard is documented as GitHub-friendly screenshots:
+
+- [Executive Overview](docs/images/dashboard-01-executive-overview.png)
+- [Demand Patterns](docs/images/dashboard-02-demand-patterns.png)
+- [Revenue and Fare](docs/images/dashboard-03-revenue-and-fare.png)
+- [Zone / Route Performance](docs/images/dashboard-04-zone-route-performance.png)
+- [Data Quality](docs/images/dashboard-05-data-quality.png)
+
+![Executive Overview](docs/images/dashboard-01-executive-overview.png)
 
 ## Learning Path
 

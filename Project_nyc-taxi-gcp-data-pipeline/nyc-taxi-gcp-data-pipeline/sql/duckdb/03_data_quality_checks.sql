@@ -6,27 +6,28 @@ Run after 01_create_core_views.sql.
 CREATE OR REPLACE VIEW mart_data_quality_summary AS
 SELECT
     source_file,
-    source_year,
-    source_month,
-    COUNT(*) AS valid_rows,
-    COUNT(*) FILTER (
-        WHERE tpep_pickup_datetime IS NULL
-           OR tpep_dropoff_datetime IS NULL
-    ) AS null_datetime_rows,
-    COUNT(*) FILTER (
-        WHERE tpep_dropoff_datetime <= tpep_pickup_datetime
-    ) AS invalid_datetime_order_rows,
-    COUNT(*) FILTER (WHERE trip_distance < 0) AS negative_distance_rows,
-    COUNT(*) FILTER (WHERE total_amount < 0) AS negative_total_amount_rows,
-    COUNT(*) FILTER (
-        WHERE pickup_location_id <= 0
-           OR dropoff_location_id <= 0
-    ) AS invalid_location_rows
-FROM vw_trip_enriched
-GROUP BY
-    source_file,
-    source_year,
-    source_month;
+    source_sha256,
+    source_year::INTEGER AS source_year,
+    source_month::INTEGER AS source_month,
+    source_year::VARCHAR
+        || '-'
+        || lpad(source_month::VARCHAR, 2, '0') AS source_month_label,
+    total_rows::BIGINT AS total_rows,
+    valid_rows::BIGINT AS valid_rows,
+    rejected_rows::BIGINT AS rejected_rows,
+    null_datetime_rows::BIGINT AS null_datetime_rows,
+    invalid_datetime_order_rows::BIGINT AS invalid_datetime_order_rows,
+    excessive_duration_rows::BIGINT AS excessive_duration_rows,
+    negative_distance_rows::BIGINT AS negative_distance_rows,
+    negative_total_amount_rows::BIGINT AS negative_total_amount_rows,
+    invalid_location_rows::BIGINT AS invalid_location_rows,
+    outside_source_month_rows::BIGINT AS outside_source_month_rows,
+    ROUND(valid_rows::DOUBLE / NULLIF(total_rows, 0), 6) AS valid_rate,
+    ROUND(rejected_rows::DOUBLE / NULLIF(total_rows, 0), 6) AS rejected_rate
+FROM read_csv_auto(
+    'reports/*_quality.csv',
+    union_by_name = true
+);
 
 -- Reconciliation by month.
 SELECT
@@ -48,4 +49,3 @@ SELECT
     quantile_cont(trip_duration_minutes, 0.95) AS p95_duration_minutes,
     quantile_cont(trip_duration_minutes, 0.99) AS p99_duration_minutes
 FROM vw_trip_enriched;
-

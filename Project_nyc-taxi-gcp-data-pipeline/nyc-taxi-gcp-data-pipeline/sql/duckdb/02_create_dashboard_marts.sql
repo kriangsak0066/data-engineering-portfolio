@@ -64,6 +64,7 @@ SELECT
     payment_type_name,
     COUNT(*) AS trips,
     SUM(total_amount) AS gross_revenue,
+    SUM(fare_amount) AS fare_revenue,
     SUM(tip_amount) AS tip_amount,
     SUM(tip_amount) / NULLIF(SUM(fare_amount), 0) AS tip_rate
 FROM vw_trip_enriched
