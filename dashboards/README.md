@@ -1,16 +1,21 @@
 # Dashboards
 
-โฟลเดอร์นี้เก็บเอกสารและ screenshot dashboard สำหรับ GitHub
+Dashboard index for the portfolio repository.
 
-แนะนำให้ commit:
+## Available Dashboard Screenshots
 
-- Dashboard screenshots เป็น `.png`
-- คำอธิบายหน้า dashboard
-- Link ไปยัง Power BI Service หรือ Looker Studio ถ้า publish แล้ว
+### NYC Taxi Local Analytics Pipeline
 
-หลีกเลี่ยง:
+- [Executive Overview](../Project_nyc-taxi-gcp-data-pipeline/nyc-taxi-gcp-data-pipeline/docs/images/dashboard-01-executive-overview.png)
+- [Demand Patterns](../Project_nyc-taxi-gcp-data-pipeline/nyc-taxi-gcp-data-pipeline/docs/images/dashboard-02-demand-patterns.png)
+- [Revenue and Fare](../Project_nyc-taxi-gcp-data-pipeline/nyc-taxi-gcp-data-pipeline/docs/images/dashboard-03-revenue-and-fare.png)
+- [Zone / Route Performance](../Project_nyc-taxi-gcp-data-pipeline/nyc-taxi-gcp-data-pipeline/docs/images/dashboard-04-zone-route-performance.png)
+- [Data Quality](../Project_nyc-taxi-gcp-data-pipeline/nyc-taxi-gcp-data-pipeline/docs/images/dashboard-05-data-quality.png)
 
-- Raw export ขนาดใหญ่
-- Credentials
-- Dataset cache ที่มีข้อมูลส่วนตัวหรือไฟล์ใหญ่เกินจำเป็น
+![NYC Taxi Executive Overview](../Project_nyc-taxi-gcp-data-pipeline/nyc-taxi-gcp-data-pipeline/docs/images/dashboard-01-executive-overview.png)
 
+## Notes
+
+- Keep dashboard screenshots as lightweight `.png` files.
+- Do not commit Power BI cache files, credentials, local exports, or raw datasets.
+- Keep each dashboard linked back to its project README and data model documentation.
