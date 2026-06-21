@@ -8,6 +8,7 @@ Portfolio hub for data engineering and analytics projects. The goal is to show p
 |---|---|---|---|
 | [NYC Taxi Local Analytics Pipeline](Project_nyc-taxi-gcp-data-pipeline/nyc-taxi-gcp-data-pipeline/) | Local data pipeline, DuckDB marts, data quality, Power BI dashboard | Python, DuckDB, SQL, Power BI | Portfolio-ready v1 |
 | [Olist E-Commerce Data Pipeline](https://github.com/kriangsak0066/olist-data-pipeline) | E-commerce ETL, SQL Server warehouse, Power BI analytics | Python, SQL Server, Power BI | Separate project repo |
+| [Air Quality & Weather Analytics Pipeline](https://github.com/kriangsak0066/air-quality-weather-data-pipeline) | PM2.5 air quality analytics pipeline with OpenAQ API ingestion, DuckDB warehouse, SQL data quality checks, and dashboard-ready marts | Python, DuckDB, SQL, OpenAQ API, Power BI | Separate project repo |
 
 ## Highlight: NYC Taxi Local Analytics Pipeline
 
