@@ -29,3 +29,5 @@ venv/
 Thumbs.db
 .vscode/
 
+air-quality-weather-data-pipeline/
+
