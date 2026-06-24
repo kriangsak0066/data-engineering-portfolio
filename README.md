@@ -2,6 +2,23 @@
 
 Portfolio hub for data engineering and analytics projects. The goal is to show practical skills across data ingestion, cloud databases, data quality, SQL modeling, analytics marts, and business dashboard design.
 
+## Portfolio Overview
+
+Start with these two portfolio-ready projects:
+
+| Project | What It Shows | Open |
+|---|---|---|
+| Azure MTA Ridership + Weather Incremental Pipeline | Azure SQL cloud pipeline, public API ingestion, incremental loading, audit logging, data quality checks, and Power BI dashboard | [Project README](azure-mta-ridership-weather-pipeline/) |
+| NYC Taxi Local Analytics Pipeline | Local analytics pipeline, DuckDB warehouse marts, rejected-row handling, data quality evidence, and Power BI dashboard | [Project README](Project_nyc-taxi-gcp-data-pipeline/nyc-taxi-gcp-data-pipeline/) |
+
+### Azure MTA Ridership + Weather Incremental Pipeline
+
+![Azure MTA Ridership Overview](azure-mta-ridership-weather-pipeline/dashboards/images/01-ridership-overview.jpg)
+
+### NYC Taxi Local Analytics Pipeline
+
+![NYC Taxi Executive Overview](Project_nyc-taxi-gcp-data-pipeline/nyc-taxi-gcp-data-pipeline/docs/images/dashboard-01-executive-overview.png)
+
 ## Featured Projects
 
 | Project | Focus | Stack | Status |
