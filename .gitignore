@@ -1,10 +1,22 @@
 # Data files
 data/raw/
 data/processed/
+data/generated/
+**/data/raw/
+**/data/processed/
+**/data/generated/
 *.csv
 *.tsv
 *.parquet
 *.xlsx
+*.bak
+*.bacpac
+*.mdf
+*.ldf
+*.duckdb
+*.db
+*.sqlite
+*.sqlite3
 
 # Secrets and local config
 .env
@@ -29,5 +41,9 @@ venv/
 Thumbs.db
 .vscode/
 
+# Standalone project repositories live next to this portfolio hub.
+# Commit each project from inside its own folder, not from the hub repo.
 air-quality-weather-data-pipeline/
-
+azure-mta-ridership-weather-pipeline/
+nyc-taxi-airflow-minio-duckdb-pipeline/
+olist-data-pipeline/

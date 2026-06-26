@@ -2,20 +2,17 @@
 
 Dashboard index for the portfolio repository.
 
-## Available Dashboard Screenshots
+Project-level dashboard assets live inside each standalone project repository:
 
-### NYC Taxi Local Analytics Pipeline
-
-- [Executive Overview](../Project_nyc-taxi-gcp-data-pipeline/nyc-taxi-gcp-data-pipeline/docs/images/dashboard-01-executive-overview.png)
-- [Demand Patterns](../Project_nyc-taxi-gcp-data-pipeline/nyc-taxi-gcp-data-pipeline/docs/images/dashboard-02-demand-patterns.png)
-- [Revenue and Fare](../Project_nyc-taxi-gcp-data-pipeline/nyc-taxi-gcp-data-pipeline/docs/images/dashboard-03-revenue-and-fare.png)
-- [Zone / Route Performance](../Project_nyc-taxi-gcp-data-pipeline/nyc-taxi-gcp-data-pipeline/docs/images/dashboard-04-zone-route-performance.png)
-- [Data Quality](../Project_nyc-taxi-gcp-data-pipeline/nyc-taxi-gcp-data-pipeline/docs/images/dashboard-05-data-quality.png)
-
-![NYC Taxi Executive Overview](../Project_nyc-taxi-gcp-data-pipeline/nyc-taxi-gcp-data-pipeline/docs/images/dashboard-01-executive-overview.png)
+| Project | Dashboard location |
+|---|---|
+| NYC Taxi Airflow + MinIO + DuckDB Pipeline | [dashboards/](https://github.com/kriangsak0066/nyc-taxi-airflow-minio-duckdb-pipeline/tree/main/dashboards) |
+| Azure MTA Ridership + Weather Pipeline | [dashboards/](https://github.com/kriangsak0066/azure-mta-ridership-weather-pipeline/tree/main/dashboards) |
+| Air Quality + Weather Analytics Pipeline | [dashboards/](https://github.com/kriangsak0066/air-quality-weather-data-pipeline/tree/main/dashboards) |
+| Olist E-Commerce Data Pipeline | [dashboards/](https://github.com/kriangsak0066/olist-data-pipeline/tree/main/dashboards) |
 
 ## Notes
 
-- Keep dashboard screenshots as lightweight `.png` files.
+- Keep final dashboard screenshots as lightweight `.png` or `.jpg` files under each project's `dashboards/images/` folder.
 - Do not commit Power BI cache files, credentials, local exports, or raw datasets.
-- Keep each dashboard linked back to its project README and data model documentation.
+- Link each dashboard back to its project README and data model documentation.

@@ -1,5 +1,0 @@
-duckdb>=1.1,<2
-pandas>=2.2,<4
-pyarrow>=17,<25
-python-dotenv>=1.0,<2
-pytest>=8,<10
